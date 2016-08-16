@@ -15,7 +15,7 @@ class MyTool(object):
                 price = selector.xpath('//td[@class="price"]/text()')[i]
                 cls = selector.xpath('//td[@class="cls"]/text()')[i]
                 release_date = selector.xpath('//td[@class="release_date"]/text()')[i]
-                in_stock = selector.xpath('//td[@class="release_date"]/text()')[i]
+                in_stock = selector.xpath('//td[@class="in_stock"]/text()')[i]
                 game = Game(gid, title, price, cls, release_date, in_stock)
                 games.append(game)
                 #print(title)
