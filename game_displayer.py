@@ -26,6 +26,7 @@ class HTML_2_Game(object):
 
     def get_games(self, urls):
         games = []
+        print('loading....')
         for each in urls:
             result = requests.get(each)
             detail_selector = etree.HTML(result.text)

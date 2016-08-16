@@ -1,8 +1,5 @@
 import cmd
-
-import os
-
-import sys
+from cbc import HTML_2_Game
 
 class CLI(cmd.Cmd):
 
@@ -12,22 +9,16 @@ class CLI(cmd.Cmd):
         self.prompt = "> "  # define command prompt
 
 
-    def do_dir(self, arg):
-        if not arg:
-
-            self.help_dir()
-
-        elif os.path.exists(arg):
-            try:
-                print("\n".join(os.listdir(arg)))
-            except NotADirectoryError as e:
-                print('except:', e)
-        else:
-            print('no such file!')
+    def do_build_game_data(self, arg):
+        h2g = HTML_2_Game('https://www.mightyape.co.nz')
+        entireUrl = 'https://www.mightyape.co.nz/Games/PS4/Adventure-RPG/All?page='
+        urls = h2g.get_urls(entireUrl)
+        games = h2g.get_games(urls)
+        h2g.build_html(games)
 
 
-    def help_dir(self):
-        print("syntax: dir path -- display a list of files and directories")
+    def help_build_game_data(self):
+        print("syntax: scrap data from urls and build an html to display what we got!")
 
 
     def do_quit(self, arg):
@@ -37,10 +28,6 @@ class CLI(cmd.Cmd):
     def help_quit(self):
         print("syntax: quit -- terminates the application")
 
-
-    # define the shortcuts
-
-    do_q = do_quit
 
 if __name__ == "__main__":
     cli = CLI()
