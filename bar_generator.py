@@ -1,15 +1,11 @@
 import plotly.plotly as py
 import plotly.graph_objs as go
 from collections import Counter
-from cbc import HTML_2_Game
 from games import Classification
 
 py.sign_in('mimimhmh@gmail.com', '8tapwyxkuv')
 
 
-h2g = HTML_2_Game('https://www.mightyape.co.nz')
-entireUrl = 'https://www.mightyape.co.nz/Games/PS4/Adventure-RPG/All?page='
-urls = h2g.get_urls(entireUrl)
 games = h2g.get_games(urls)
 c = Counter()
 for game in games:

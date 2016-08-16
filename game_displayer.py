@@ -63,7 +63,7 @@ class HTML_2_Game(object):
         return games
 
     def build_html(self, games):
-        with open('abc.html', 'w', encoding='UTF-8', errors='ignore') as f:
+        with open('game_display.html', 'w', encoding='UTF-8', errors='ignore') as f:
             f.write('<!DOCTYPE html>\n')
             f.write('<html>\n')
             f.write('<head>\n')
@@ -85,15 +85,15 @@ class HTML_2_Game(object):
             f.write('</tr>\n')
             for each in games:
                 f.write('<tr class="game">\n')
-                f.write('<td>' + each.game_id + '</td>\n')
-                f.write('<td>' + each.name + '</td>\n')
+                f.write('<td class="gid">' + each.game_id + '</td>\n')
+                f.write('<td class="title">' + each.name + '</td>\n')
                 if each.price != 'TBC':
-                    f.write('<td>$' + each.price + '</td>\n')
+                    f.write('<td class="price">$' + each.price + '</td>\n')
                 else:
-                    f.write('<td>' + each.price + '</td>\n')
-                f.write('<td>' + each.classification + '</td>\n')
-                f.write('<td>' + each.release_date + '</td>\n')
-                f.write('<td>' + str(each.inStock) + '</td>\n')
+                    f.write('<td class="price">' + each.price + '</td>\n')
+                f.write('<td class="cls">' + each.classification + '</td>\n')
+                f.write('<td class="release_date">' + each.release_date + '</td>\n')
+                f.write('<td class="in_stock">' + str(each.inStock) + '</td>\n')
                 f.write('</tr>\n')
             f.write('</table>\n')
             f.write('</div>\n')

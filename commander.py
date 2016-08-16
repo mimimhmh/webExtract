@@ -1,11 +1,11 @@
 import cmd
-from cbc import HTML_2_Game
+from game_displayer import HTML_2_Game
 
 class CLI(cmd.Cmd):
 
     def __init__(self):
         cmd.Cmd.__init__(self)
-
+        print("Please type help first and decide what you need!")
         self.prompt = "> "  # define command prompt
 
 
@@ -20,10 +20,20 @@ class CLI(cmd.Cmd):
     def help_build_game_data(self):
         print("syntax: scrap data from urls and build an html to display what we got!")
 
+    def do_show_bar(self, arg):
+        pass
+
+    def help_show_bar(self):
+        print("syntax: scrap data from urls and build an html to display what we got!")
+
+    def do_show_pie(self, arg):
+        pass
+
+    def help_show_pie(self):
+        pass
 
     def do_quit(self, arg):
         return True
-
 
     def help_quit(self):
         print("syntax: quit -- terminates the application")
