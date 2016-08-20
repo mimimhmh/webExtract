@@ -51,7 +51,7 @@ class BarTool(object):
         trace1 = go.Bar(
             x=['G', 'PG', 'M', 'R13', 'R16', 'R18', 'TBC', 'UNDEFINED'],
             y=[count_G, count_PG, count_M, count_R13, count_R16, count_R18, count_TBC, count_UNDEFINED],
-            name='Quantities'
+            name='Total'
         )
 
         trace2 = go.Bar(
