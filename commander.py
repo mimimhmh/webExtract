@@ -1,5 +1,6 @@
 import cmd
 from game_displayer import HTML_2_Game
+from bar_generator import BarTool
 
 class CLI(cmd.Cmd):
 
@@ -21,7 +22,8 @@ class CLI(cmd.Cmd):
         print("syntax: scrap data from urls and build an html to display what we got!")
 
     def do_show_bar(self, arg):
-        pass
+        bt = BarTool()
+        bt.show_bar()
 
     def help_show_bar(self):
         print("syntax: scrap data from urls and build an html to display what we got!")
