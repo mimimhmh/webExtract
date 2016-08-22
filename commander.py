@@ -1,6 +1,7 @@
 import cmd
 from game_displayer import HTML_2_Game
 from bar_generator import BarTool
+from pie_generator import PieTool
 
 class CLI(cmd.Cmd):
 
@@ -29,10 +30,11 @@ class CLI(cmd.Cmd):
         print("syntax: scrap data from urls and build an html to display what we got!")
 
     def do_show_pie(self, arg):
-        pass
+        pt = PieTool()
+        pt.show_pie()
 
     def help_show_pie(self):
-        pass
+        print("syntax: scrap data from urls and build an html to display what we got!")
 
     def do_quit(self, arg):
         return True
@@ -43,5 +45,4 @@ class CLI(cmd.Cmd):
 
 if __name__ == "__main__":
     cli = CLI()
-
     cli.cmdloop()
