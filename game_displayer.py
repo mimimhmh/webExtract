@@ -38,6 +38,7 @@ class HTML_2_Game(object):
                 f.write('<div>\n')
                 f.write('<table id="table-1">\n')
                 f.write('<tr>\n')
+                f.write('<th>No.</th>\n')
                 f.write('<th>game_ID</th>\n')
                 f.write('<th>title</th>\n')
                 f.write('<th>price</th>\n')
@@ -47,6 +48,7 @@ class HTML_2_Game(object):
                 f.write('</tr>\n')
                 for each in games:
                     f.write('<tr class="game">\n')
+                    f.write('<td class="NO.">' + str(games.index(each) + 1) + '</td>')
                     f.write('<td class="gid">' + each.game_id + '</td>\n')
                     f.write('<td class="title">' + each.name + '</td>\n')
                     if each.price != 'TBC':
@@ -62,6 +64,9 @@ class HTML_2_Game(object):
                 f.write('</body>\n')
         except OSError as err:
             print("OS error: {0}".format(err))
+        except TypeError as err:
+            print('Type Error: ', err)
+            raise
         except:
             print("Unexpected error:", sys.exc_info()[0])
             raise
@@ -69,12 +74,12 @@ class HTML_2_Game(object):
     def serializing_game(self, urls):
         games = []
         print('loading....')
-        for each in urls:
-            result = requests.get(each)
+        for url in urls:
+            result = requests.get(url)
             detail_selector = etree.HTML(result.text)
             inStock = True
-
-            if len(detail_selector.xpath('//span[@class="nameSubtitle"]')) != 0:
+            #print(url)
+            if len(detail_selector.xpath('//span[@class="nameSubtitle"]')) != 0 and detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0][0].isupper():
                 game_name = detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0]
             else:
                 game_name = detail_selector.xpath('//span[@itemprop="name"]/text()')[0]
@@ -125,7 +130,7 @@ class HTML_2_Game(object):
 
 if __name__ == '__main__':
     h2g = HTML_2_Game('https://www.mightyape.co.nz')
-    entireUrl = 'https://www.mightyape.co.nz/Games/PS4/Adventure-RPG/All?page='
+    entireUrl = 'https://www.mightyape.co.nz/games/ps4/adventure-rpg/All?page='
     urls = h2g.get_urls(entireUrl)
     h2g.serializing_game(urls)
     games = h2g.unserializing_game()

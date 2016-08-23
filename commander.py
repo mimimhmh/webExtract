@@ -14,7 +14,7 @@ class CLI(cmd.Cmd):
 
     def do_build_game_data(self, arg):
         h2g = HTML_2_Game('https://www.mightyape.co.nz')
-        entireUrl = 'https://www.mightyape.co.nz/Games/PS4/Adventure-RPG/All?page='
+        entireUrl = 'https://www.mightyape.co.nz/games/ps4/adventure-rpg/all?page='
         urls = h2g.get_urls(entireUrl)
         h2g.serializing_game(urls)
         games = h2g.unserializing_game()
