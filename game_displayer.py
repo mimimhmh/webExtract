@@ -25,45 +25,6 @@ class HTML_2_Game(object):
                 urls.append(real_path)
         return urls
 
-    def get_games(self, urls):
-        games = []
-        print('loading....')
-        for each in urls:
-            result = requests.get(each)
-            detail_selector = etree.HTML(result.text)
-            inStock = True
-
-            if len(detail_selector.xpath('//span[@class="nameSubtitle"]')) != 0:
-                game_name = detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0]
-            else:
-                game_name = detail_selector.xpath('//span[@itemprop="name"]/text()')[0]
-            print(game_name)
-            if len(detail_selector.xpath('//div[@class="productDetails"]//span[@itemprop="identifier"]/text()')) == 1:
-                game_id = detail_selector.xpath('//div[@class="productDetails"]//span[@itemprop="identifier"]/text()')[
-                    0]
-            else:
-                game_id = detail_selector.xpath('//div[@class="productDetails"]//span[@itemprop="identifier"]/text()')[
-                    1]
-
-            if len(detail_selector.xpath('//div[@itemprop="price"]/@content')) == 0:
-                game_price = 'TBC'
-            else:
-                game_price = detail_selector.xpath('//div[@itemprop="price"]/@content')[0]
-
-            if len(detail_selector.xpath('//div[@class="classification"]/img/@alt')) == 0:
-                game_classification = 'undefined'
-            else:
-                game_classification = detail_selector.xpath('//div[@class="classification"]/img/@alt')[0]
-
-            status_str = detail_selector.xpath('//div[@class="status"]/text()')[0].strip()
-            if status_str != 'In stock at':
-                inStock = False
-            release_date = detail_selector.xpath('//div[@class="productDetails"]/div/div/div/text()')[0].strip()
-            game = Game(game_id, game_name, game_price, game_classification, release_date, inStock)
-            games.append(game)
-        self.serializing_game(games)
-        return games
-
     def build_html(self, games):
         with open('game_display.html', 'w', encoding='UTF-8', errors='ignore') as f:
             f.write('<!DOCTYPE html>\n')
@@ -101,23 +62,56 @@ class HTML_2_Game(object):
             f.write('</div>\n')
             f.write('</body>\n')
 
-    def serializing_game(self, games):
-        with open('games.txt', 'wb') as f:
+    def serializing_game(self, urls):
+        games = []
+        print('loading....')
+        for each in urls:
+            result = requests.get(each)
+            detail_selector = etree.HTML(result.text)
+            inStock = True
+
+            if len(detail_selector.xpath('//span[@class="nameSubtitle"]')) != 0:
+                game_name = detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0]
+            else:
+                game_name = detail_selector.xpath('//span[@itemprop="name"]/text()')[0]
+            print(game_name)
+            if len(detail_selector.xpath('//div[@class="productDetails"]//span[@itemprop="identifier"]/text()')) == 1:
+                game_id = detail_selector.xpath('//div[@class="productDetails"]//span[@itemprop="identifier"]/text()')[
+                    0]
+            else:
+                game_id = detail_selector.xpath('//div[@class="productDetails"]//span[@itemprop="identifier"]/text()')[
+                    1]
+
+            if len(detail_selector.xpath('//div[@itemprop="price"]/@content')) == 0:
+                game_price = 'TBC'
+            else:
+                game_price = detail_selector.xpath('//div[@itemprop="price"]/@content')[0]
+
+            if len(detail_selector.xpath('//div[@class="classification"]/img/@alt')) == 0:
+                game_classification = 'undefined'
+            else:
+                game_classification = detail_selector.xpath('//div[@class="classification"]/img/@alt')[0]
+
+            status_str = detail_selector.xpath('//div[@class="status"]/text()')[0].strip()
+            if status_str != 'In stock at':
+                inStock = False
+            release_date = detail_selector.xpath('//div[@class="productDetails"]/div/div/div/text()')[0].strip()
+            game = Game(game_id, game_name, game_price, game_classification, release_date, inStock)
+            games.append(game)
+        with open('games.dat', 'wb') as f:
             f.write(pickle.dumps(games))
 
     def unserializing_game(self):
         games = []
-        with open('games.txt', 'rb') as f:
+        with open('games.dat', 'rb') as f:
             games = pickle.load(f)
         return games
 
 if __name__ == '__main__':
     h2g = HTML_2_Game('https://www.mightyape.co.nz')
-    # entireUrl = 'https://www.mightyape.co.nz/Games/PS4/Adventure-RPG/All?page='
-    # urls = h2g.get_urls(entireUrl)
+    entireUrl = 'https://www.mightyape.co.nz/Games/PS4/Adventure-RPG/All?page='
+    urls = h2g.get_urls(entireUrl)
     # # print(urls)
-    # games = h2g.get_games(urls)
-    # h2g.build_html(games)
+    # h2g.serializing_game(urls)
     games = h2g.unserializing_game()
-    for game in games:
-        print(game.name)
+    h2g.build_html(games)
