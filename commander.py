@@ -12,7 +12,6 @@ class CLI(cmd.Cmd):
         print("Please type help first and decide what you need!")
         self.prompt = "> "  # define command prompt
 
-
     def do_build_game_data(self, arg):
         h2g = HTML_2_Game('https://www.mightyape.co.nz')
         entireUrl = 'https://www.mightyape.co.nz/Games/PS4/Adventure-RPG/All?page='

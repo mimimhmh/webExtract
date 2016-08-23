@@ -7,7 +7,6 @@ class HTML_2_Game(object):
     def __init__(self, url_prefix):
         self.url_prefix = url_prefix
 
-# url_prefix = 'https://www.mightyape.co.nz'
     def get_urls(self, entireUrl):
         urls = []
         for i in range(1, 4):
@@ -15,7 +14,7 @@ class HTML_2_Game(object):
             url = entireUrl + str(i)
             r = requests.get(url)
             selector = etree.HTML(r.text)
-            # 找出有多少条记录
+            # get records quantity
             count = len(selector.xpath('//div[@class="product"]'))
             for each in range(count):
                 path = '//div[@class="product"][%d]/a/@href' % (each + 1)
@@ -111,7 +110,5 @@ if __name__ == '__main__':
     h2g = HTML_2_Game('https://www.mightyape.co.nz')
     entireUrl = 'https://www.mightyape.co.nz/Games/PS4/Adventure-RPG/All?page='
     urls = h2g.get_urls(entireUrl)
-    # # print(urls)
-    # h2g.serializing_game(urls)
     games = h2g.unserializing_game()
     h2g.build_html(games)

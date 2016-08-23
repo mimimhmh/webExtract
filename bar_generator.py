@@ -22,21 +22,21 @@ class BarTool(object):
         un_in = 0
         for game in games:
             c[game.classification] = c[game.classification] + 1
-            if (game.classification == Classification.G.value) and (game.inStock == 'True'):
+            if (game.classification == Classification.G.value) and (game.inStock):
                 g_in += 1
-            if (game.classification == Classification.PG.value) and (game.inStock == 'True'):
+            if (game.classification == Classification.PG.value) and (game.inStock):
                 pg_in += 1
-            if (game.classification == Classification.M.value) and (game.inStock == 'True'):
+            if (game.classification == Classification.M.value) and (game.inStock):
                 m_in += 1
-            if (game.classification == Classification.R13.value) and (game.inStock == 'True'):
+            if (game.classification == Classification.R13.value) and (game.inStock):
                 r13_in += 1
-            if (game.classification == Classification.R16.value) and (game.inStock == 'True'):
+            if (game.classification == Classification.R16.value) and (game.inStock):
                 r16_in += 1
-            if (game.classification == Classification.R18.value) and (game.inStock == 'True'):
+            if (game.classification == Classification.R18.value) and (game.inStock):
                 r18_in += 1
-            if (game.classification == Classification.TBC.value) and (game.inStock == 'True'):
+            if (game.classification == Classification.TBC.value) and (game.inStock):
                 tbc_in += 1
-            if (game.classification == Classification.UNDEFINED.value) and (game.inStock == 'True'):
+            if (game.classification == Classification.UNDEFINED.value) and (game.inStock):
                 un_in += 1
 
         count_G = c[Classification.G.value]
