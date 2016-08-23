@@ -11,5 +11,8 @@ class MyTool(object):
 if __name__ == '__main__':
     t = MyTool()
     games = t.analyse()
-    for game in games:
-        print(game.classification + ', ' + str(game.inStock))
+    try:
+        for game in games:
+            print(game.classification + ', ' + game.inStock)
+    except TypeError:
+        print('Type error!')
