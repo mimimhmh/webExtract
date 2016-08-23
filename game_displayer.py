@@ -1,3 +1,4 @@
+import pickle
 import requests
 from lxml import etree
 from games import Game
@@ -60,6 +61,7 @@ class HTML_2_Game(object):
             release_date = detail_selector.xpath('//div[@class="productDetails"]/div/div/div/text()')[0].strip()
             game = Game(game_id, game_name, game_price, game_classification, release_date, inStock)
             games.append(game)
+        self.serializing_game(games)
         return games
 
     def build_html(self, games):
@@ -99,12 +101,23 @@ class HTML_2_Game(object):
             f.write('</div>\n')
             f.write('</body>\n')
 
+    def serializing_game(self, games):
+        with open('games.txt', 'wb') as f:
+            f.write(pickle.dumps(games))
 
+    def unserializing_game(self):
+        games = []
+        with open('games.txt', 'rb') as f:
+            games = pickle.load(f)
+        return games
 
 if __name__ == '__main__':
     h2g = HTML_2_Game('https://www.mightyape.co.nz')
-    entireUrl = 'https://www.mightyape.co.nz/Games/PS4/Adventure-RPG/All?page='
-    urls = h2g.get_urls(entireUrl)
-    # print(urls)
-    games = h2g.get_games(urls)
-    h2g.build_html(games)
+    # entireUrl = 'https://www.mightyape.co.nz/Games/PS4/Adventure-RPG/All?page='
+    # urls = h2g.get_urls(entireUrl)
+    # # print(urls)
+    # games = h2g.get_games(urls)
+    # h2g.build_html(games)
+    games = h2g.unserializing_game()
+    for game in games:
+        print(game.name)
