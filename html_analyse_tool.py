@@ -1,5 +1,6 @@
 import pickle
 
+
 class MyTool(object):
 
     def analyse(self):

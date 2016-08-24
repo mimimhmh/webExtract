@@ -1,6 +1,7 @@
 import plotly.plotly as py
 from html_analyse_tool import MyTool
 
+
 class PieTool(object):
 
     def show_pie(self):

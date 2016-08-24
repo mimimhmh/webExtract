@@ -4,6 +4,7 @@ from collections import Counter
 from games import Game, Classification
 from html_analyse_tool import MyTool
 
+
 py.sign_in('mimimhmh@gmail.com', '8tapwyxkuv')
 
 class BarTool(object):

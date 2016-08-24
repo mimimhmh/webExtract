@@ -1,10 +1,13 @@
 import sys
 import pickle
 import requests
+import os
 from lxml import etree
-from games import Game
+from webExtract.games import Game
 
-class HTML_2_Game(object):
+
+class HTML2Game(object):
+
     def __init__(self, url_prefix):
         self.url_prefix = url_prefix
 
@@ -116,10 +119,10 @@ class HTML_2_Game(object):
             print("Unexpected error:", sys.exc_info()[0])
             raise
 
-    def unserializing_game(self):
+    def unserializing_game(self, path):
         games = []
         try:
-            with open('games.dat', 'rb') as f:
+            with open(path + '/games.dat', 'rb') as f:
                 games = pickle.load(f)
         except OSError as err:
             print("OS error: {0}".format(err))
@@ -129,9 +132,10 @@ class HTML_2_Game(object):
         return games
 
 if __name__ == '__main__':
-    h2g = HTML_2_Game('https://www.mightyape.co.nz')
+    h2g = HTML2Game('https://www.mightyape.co.nz')
     entireUrl = 'https://www.mightyape.co.nz/games/ps4/adventure-rpg/All?page='
-    urls = h2g.get_urls(entireUrl)
-    h2g.serializing_game(urls)
-    games = h2g.unserializing_game()
-    h2g.build_html(games)
+    # urls = h2g.get_urls(entireUrl)
+    # h2g.serializing_game(urls)
+    games = h2g.unserializing_game(os.getcwd())
+    # h2g.build_html(games)
+    #print(len(h2g.get_urls(entireUrl)))
