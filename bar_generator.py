@@ -7,6 +7,7 @@ from html_analyse_tool import MyTool
 
 py.sign_in('mimimhmh@gmail.com', '8tapwyxkuv')
 
+
 class BarTool(object):
 
     def show_bar(self):
@@ -24,21 +25,29 @@ class BarTool(object):
         for game in games:
             c[game.classification] = c[game.classification] + 1
             try:
-                if (game.classification == Classification.G.value) and (game.inStock):
+                if (game.classification == Classification.G.value) \
+                        and (game.inStock):
                     g_in += 1
-                if (game.classification == Classification.PG.value) and (game.inStock):
+                if (game.classification == Classification.PG.value) \
+                        and (game.inStock):
                     pg_in += 1
-                if (game.classification == Classification.M.value) and (game.inStock):
+                if (game.classification == Classification.M.value) \
+                        and (game.inStock):
                     m_in += 1
-                if (game.classification == Classification.R13.value) and (game.inStock):
+                if (game.classification == Classification.R13.value) \
+                        and (game.inStock):
                     r13_in += 1
-                if (game.classification == Classification.R16.value) and (game.inStock):
+                if (game.classification == Classification.R16.value) \
+                        and (game.inStock):
                     r16_in += 1
-                if (game.classification == Classification.R18.value) and (game.inStock):
+                if (game.classification == Classification.R18.value) \
+                        and (game.inStock):
                     r18_in += 1
-                if (game.classification == Classification.TBC.value) and (game.inStock):
+                if (game.classification == Classification.TBC.value) \
+                        and (game.inStock):
                     tbc_in += 1
-                if (game.classification == Classification.UNDEFINED.value) and (game.inStock):
+                if (game.classification == Classification.UNDEFINED.value) \
+                        and (game.inStock):
                     un_in += 1
             except TypeError:
                 print("Oops!  That was no valid type.  Try again...")
@@ -54,7 +63,8 @@ class BarTool(object):
 
         trace1 = go.Bar(
             x=['G', 'PG', 'M', 'R13', 'R16', 'R18', 'TBC', 'UNDEFINED'],
-            y=[count_G, count_PG, count_M, count_R13, count_R16, count_R18, count_TBC, count_UNDEFINED],
+            y=[count_G, count_PG, count_M, count_R13, count_R16,
+               count_R18, count_TBC, count_UNDEFINED],
             name='Total'
         )
 

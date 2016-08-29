@@ -5,6 +5,7 @@ from webExtract.game_displayer import HTML2Game
 from webExtract.bar_generator import BarTool
 from webExtract.pie_generator import PieTool
 
+
 class CLI(cmd.Cmd):
 
     def __init__(self):
@@ -15,29 +16,33 @@ class CLI(cmd.Cmd):
     def do_build_game_data(self, arg):
         path = os.path.dirname(os.path.abspath("__file__"))
         h2g = HTML2Game('https://www.mightyape.co.nz')
-        entireUrl = 'https://www.mightyape.co.nz/games/ps4/adventure-rpg/all?page='
-        urls = h2g.get_urls(entireUrl)
+        target = 'https://www.mightyape.co.nz/games/ps4/adventure-rpg'
+        entire_url = target + '/all?page='
+        urls = h2g.get_urls(entire_url)
         h2g.serializing_game(urls)
         games = h2g.unserializing_game(path)
         h2g.build_html(games)
         webbrowser.open('file://' + os.path.realpath('game_display.html'))
 
     def help_build_game_data(self):
-        print("syntax: scrap data from urls and build an html to display what we got!")
+        print("syntax: scrap data from urls "
+              "and build an html to display what we got!")
 
     def do_show_bar(self, arg):
         bt = BarTool()
         bt.show_bar()
 
     def help_show_bar(self):
-        print("syntax: scrap data from urls and build an html to display what we got!")
+        print("syntax: scrap data from urls "
+              " build an html to display what we got!")
 
     def do_show_pie(self, arg):
         pt = PieTool()
         pt.show_pie()
 
     def help_show_pie(self):
-        print("syntax: scrap data from urls and build an html to display what we got!")
+        print("syntax: scrap data from urls "
+              "and build an html to display what we got!")
 
     def do_quit(self, arg):
         return True

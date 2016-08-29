@@ -81,23 +81,34 @@ class HTML2Game(object):
             result = requests.get(url)
             detail_selector = etree.HTML(result.text)
             inStock = True
-            #print(url)
-            if len(detail_selector.xpath('//span[@class="nameSubtitle"]')) != 0 and detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0][0].isupper():
-                game_name = detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0]
-            else:
-                game_name = detail_selector.xpath('//span[@itemprop="name"]/text()')[0]
-            print(game_name)
-            if len(detail_selector.xpath('//div[@class="productDetails"]//span[@itemprop="identifier"]/text()')) == 1:
-                game_id = detail_selector.xpath('//div[@class="productDetails"]//span[@itemprop="identifier"]/text()')[
-                    0]
-            else:
-                game_id = detail_selector.xpath('//div[@class="productDetails"]//span[@itemprop="identifier"]/text()')[
-                    1]
 
-            if len(detail_selector.xpath('//div[@itemprop="price"]/@content')) == 0:
+            game_id = detail_selector.xpath('//div[@class="productDetails"]/div/div[last()]/div/text()')[0]
+
+            if len(detail_selector.xpath('//header[@class="nameSubtitle"]')) != 0 \
+                    and detail_selector.xpath('//header[@class="nameSubtitle"]/text()')[0][0].isupper():
+                game_name = detail_selector.xpath('//header[@class="nameSubtitle"]/text()')[0]
+            else:
+                game_name = detail_selector.xpath('//header/h1/text()')[0]
+            print(game_name)
+            print(game_id)
+            print(url)
+
+            if len(detail_selector.xpath('//div[@class="stock-status unavailable"]')) == 1:
                 game_price = 'TBC'
             else:
-                game_price = detail_selector.xpath('//div[@itemprop="price"]/@content')[0]
+                dollars = detail_selector.xpath('//span[@class="dollar"]/text()')[0]
+                if dollars == 'TBC':
+                    game_price = dollars
+                else:
+                    cents = detail_selector.xpath('//span[@class="cents"]/text()')[0]
+                    game_price = dollars + '.' + cents
+            print(game_price)
+            print("------------------")
+
+            # if len(detail_selector.xpath('//div[@itemprop="price"]/@content')) == 0:
+            #     game_price = 'TBC'
+            # else:
+            #     game_price = detail_selector.xpath('//div[@itemprop="price"]/@content')[0]
 
             if len(detail_selector.xpath('//div[@class="classification"]/img/@alt')) == 0:
                 game_classification = 'undefined'
@@ -134,8 +145,8 @@ class HTML2Game(object):
 if __name__ == '__main__':
     h2g = HTML2Game('https://www.mightyape.co.nz')
     entireUrl = 'https://www.mightyape.co.nz/games/ps4/adventure-rpg/All?page='
-    # urls = h2g.get_urls(entireUrl)
-    # h2g.serializing_game(urls)
+    urls = h2g.get_urls(entireUrl)
+    h2g.serializing_game(urls)
     games = h2g.unserializing_game(os.getcwd())
-    # h2g.build_html(games)
-    #print(len(h2g.get_urls(entireUrl)))
+    h2g.build_html(games)
+    # print(len(h2g.get_urls(entireUrl)))

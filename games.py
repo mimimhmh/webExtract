@@ -12,15 +12,14 @@ class Classification(Enum):
     TBC = 'Pending Classification'
     UNDEFINED = 'undefined'
 
+
 class Game(object):
 
-    def __init__(self, game_id, name, price, classification, release_date, inStock=True):
+    def __init__(self, game_id, name, price, classification, release_date,
+                 inStock=True):
         self.game_id = game_id
         self.name = name
         self.price = price
         self.classification = classification
         self.release_date = release_date
         self.inStock = inStock
-
-
-
