@@ -27,13 +27,16 @@ class HTML2Game(object):
         return urls
 
     def build_html(self, games):
+        css_link = '<link rel="stylesheet" ' \
+                   'type="text/css" href="stylesheet.css">'
         try:
-            with open('game_display.html', 'w', encoding='UTF-8', errors='ignore') as f:
+            with open('game_display.html', 'w',
+                      encoding='UTF-8', errors='ignore') as f:
                 f.write('<!DOCTYPE html>\n')
                 f.write('<html>\n')
                 f.write('<head>\n')
                 f.write('<title>Games Data</title>\n')
-                f.write('<link rel="stylesheet" type="text/css" href="stylesheet.css">')
+                f.write(css_link)
                 f.write('</head>\n')
                 f.write('<body>\n')
                 f.write('<h1>Game Data</h1>\n')
@@ -84,9 +87,9 @@ class HTML2Game(object):
 
             game_id = detail_selector.xpath('//div[@class="productDetails"]/div/div[last()]/div/text()')[0]
 
-            if len(detail_selector.xpath('//header[@class="nameSubtitle"]')) != 0 \
-                    and detail_selector.xpath('//header[@class="nameSubtitle"]/text()')[0][0].isupper():
-                game_name = detail_selector.xpath('//header[@class="nameSubtitle"]/text()')[0]
+            if len(detail_selector.xpath('//span[@class="nameSubtitle"]')) != 0 \
+                    and detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0][0].isupper():
+                game_name = detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0]
             else:
                 game_name = detail_selector.xpath('//header/h1/text()')[0]
             print(game_name)

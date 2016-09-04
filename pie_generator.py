@@ -30,8 +30,10 @@ class PieTool(object):
                 price_170_plus += 1
 
         fig = {
-            'data': [{'labels': ['$40-', '$40~$70', '$70~ $100', '$100~ $170', '$170+', 'TBC'],
-                      'values': [price_40_below, price_40_70, price_70_100, price_100_170, price_170_plus, price_tbc],
+            'data': [{'labels': ['$40-', '$40~$70', '$70~ $100',
+                                 '$100~ $170', '$170+', 'TBC'],
+                      'values': [price_40_below, price_40_70, price_70_100,
+                                 price_100_170, price_170_plus, price_tbc],
                       'type': 'pie'}],
             'layout': {'title': 'Game Price Consist'}
         }
