@@ -1,9 +1,9 @@
 import cmd
 import os
 import webbrowser
-from webExtract.game_displayer import HTML2Game
-from webExtract.bar_generator import BarTool
-from webExtract.pie_generator import PieTool
+from game_displayer import HTML2Game
+from bar_generator import BarTool
+from pie_generator import PieTool
 
 
 class CLI(cmd.Cmd):

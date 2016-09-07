@@ -3,7 +3,7 @@ import pickle
 import requests
 import os
 from lxml import etree
-from webExtract.games import Game
+from games import Game
 
 
 class HTML2Game(object):
@@ -107,11 +107,6 @@ class HTML2Game(object):
                     game_price = dollars + '.' + cents
             print(game_price)
             print("------------------")
-
-            # if len(detail_selector.xpath('//div[@itemprop="price"]/@content')) == 0:
-            #     game_price = 'TBC'
-            # else:
-            #     game_price = detail_selector.xpath('//div[@itemprop="price"]/@content')[0]
 
             if len(detail_selector.xpath('//div[@class="classification"]/img/@alt')) == 0:
                 game_classification = 'undefined'

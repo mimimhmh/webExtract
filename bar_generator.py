@@ -83,6 +83,6 @@ class BarTool(object):
         py.plot(fig, filename='grouped-bar')
 
 
-if __name__ == '__main__':
-    bt = BarTool()
-    bt.show_bar()
+# if __name__ == '__main__':
+#     bt = BarTool()
+#     bt.show_bar()

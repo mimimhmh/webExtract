@@ -9,11 +9,11 @@ class MyTool(object):
             games = pickle.load(f)
         return games
 
-if __name__ == '__main__':
-    t = MyTool()
-    games = t.analyse()
-    try:
-        for game in games:
-            print(game.classification + ', ' + game.inStock)
-    except TypeError:
-        print('Type error!')
+# if __name__ == '__main__':
+#     t = MyTool()
+#     games = t.analyse()
+#     try:
+#         for game in games:
+#             print(game.classification + ', ' + game.inStock)
+#     except TypeError:
+#         print('Type error!')

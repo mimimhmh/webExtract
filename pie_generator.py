@@ -43,6 +43,6 @@ class PieTool(object):
 '''
 
 '''
-if __name__ == '__main__':
-    pt = PieTool()
-    pt.show_pie()
+# if __name__ == '__main__':
+#     pt = PieTool()
+#     pt.show_pie()
