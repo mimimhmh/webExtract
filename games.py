@@ -16,10 +16,10 @@ class Classification(Enum):
 class Game(object):
 
     def __init__(self, game_id, name, price, classification, release_date,
-                 inStock=True):
+                 in_stock=True):
         self.game_id = game_id
         self.name = name
         self.price = price
         self.classification = classification
         self.release_date = release_date
-        self.inStock = inStock
+        self.in_stock = in_stock

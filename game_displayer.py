@@ -1,30 +1,8 @@
 import sys
 import pickle
-import requests
-import os
-from lxml import etree
-from games import Game
 
 
 class HTML2Game(object):
-
-    def __init__(self, url_prefix):
-        self.url_prefix = url_prefix
-
-    def get_urls(self, entireUrl):
-        urls = []
-        for i in range(1, 4):
-            url = entireUrl + str(i)
-            r = requests.get(url)
-            selector = etree.HTML(r.text)
-            # get records quantity
-            count = len(selector.xpath('//div[@class="product"]'))
-            for each in range(count):
-                path = '//div[@class="product"][%d]/a/@href' % (each + 1)
-                url = selector.xpath(path)
-                real_path = self.url_prefix + url[0]
-                urls.append(real_path)
-        return urls
 
     def build_html(self, games):
         css_link = '<link rel="stylesheet" ' \
@@ -63,7 +41,7 @@ class HTML2Game(object):
                         f.write('<td class="price">' + each.price + '</td>\n')
                     f.write('<td class="cls">' + each.classification + '</td>\n')
                     f.write('<td class="release_date">' + each.release_date + '</td>\n')
-                    f.write('<td class="in_stock">' + str(each.inStock) + '</td>\n')
+                    f.write('<td class="in_stock">' + str(each.in_stock) + '</td>\n')
                     f.write('</tr>\n')
                 f.write('</table>\n')
                 f.write('</div>\n')
@@ -73,57 +51,6 @@ class HTML2Game(object):
         except TypeError as err:
             print('Type Error: ', err)
             raise
-        except:
-            print("Unexpected error:", sys.exc_info()[0])
-            raise
-
-    def serializing_game(self, urls):
-        games = []
-        print('loading....')
-        for url in urls:
-            result = requests.get(url)
-            detail_selector = etree.HTML(result.text)
-            inStock = True
-
-            game_id = detail_selector.xpath('//div[@class="productDetails"]/div/div[last()]/div/text()')[0]
-
-            if len(detail_selector.xpath('//span[@class="nameSubtitle"]')) != 0 \
-                    and detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0][0].isupper():
-                game_name = detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0]
-            else:
-                game_name = detail_selector.xpath('//header/h1/text()')[0]
-            print(game_name)
-            print(game_id)
-            print(url)
-
-            if len(detail_selector.xpath('//div[@class="stock-status unavailable"]')) == 1:
-                game_price = 'TBC'
-            else:
-                dollars = detail_selector.xpath('//span[@class="dollar"]/text()')[0]
-                if dollars == 'TBC':
-                    game_price = dollars
-                else:
-                    cents = detail_selector.xpath('//span[@class="cents"]/text()')[0]
-                    game_price = dollars + '.' + cents
-            print(game_price)
-            print("------------------")
-
-            if len(detail_selector.xpath('//div[@class="classification"]/img/@alt')) == 0:
-                game_classification = 'undefined'
-            else:
-                game_classification = detail_selector.xpath('//div[@class="classification"]/img/@alt')[0]
-
-            status_str = detail_selector.xpath('//div[@class="status"]/text()')[0].strip()
-            if status_str != 'In stock at':
-                inStock = False
-            release_date = detail_selector.xpath('//div[@class="productDetails"]/div/div/div/text()')[0].strip()
-            game = Game(game_id, game_name, game_price, game_classification, release_date, inStock)
-            games.append(game)
-        try:
-            with open('games.dat', 'wb') as f:
-                f.write(pickle.dumps(games))
-        except OSError as err:
-            print("OS error: {0}".format(err))
         except:
             print("Unexpected error:", sys.exc_info()[0])
             raise
@@ -141,10 +68,4 @@ class HTML2Game(object):
         return games
 
 if __name__ == '__main__':
-    h2g = HTML2Game('https://www.mightyape.co.nz')
-    entireUrl = 'https://www.mightyape.co.nz/games/ps4/adventure-rpg/All?page='
-    urls = h2g.get_urls(entireUrl)
-    h2g.serializing_game(urls)
-    games = h2g.unserializing_game(os.getcwd())
-    h2g.build_html(games)
     # print(len(h2g.get_urls(entireUrl)))
