@@ -35,7 +35,6 @@ class URLTool(object):
     def serializing_game(self):
         games = []
         urls = self.get_urls()
-        print('loading....')
         for url in urls:
             result = requests.get(url)
             detail_selector = etree.HTML(result.text)
@@ -75,6 +74,7 @@ class URLTool(object):
             release_date = detail_selector.xpath('//div[@class="productDetails"]/div/div/div/text()')[0].strip()
             game = Game(game_id, game_name, game_price, game_classification, release_date, in_stock)
             games.append(game)
+        print(str(len(games)) + ' in total')
         try:
             with open('games.dat', 'wb') as f:
                 f.write(pickle.dumps(games))
@@ -83,7 +83,3 @@ class URLTool(object):
         except:
             print("Unexpected error:", sys.exc_info()[0])
             raise
-
-if __name__ == '__main__':
-    ut = URLTool()
-    ut.serializing_game()

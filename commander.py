@@ -1,9 +1,10 @@
 import cmd
 import os
 import webbrowser
-from game_displayer import HTML2Game
-from bar_generator import BarTool
-from pie_generator import PieTool
+from webExtract.url_tools import URLTool
+from webExtract.game_html_display import DataTool
+from webExtract.bar_generator import BarTool
+from webExtract.pie_generator import PieTool
 
 
 class CLI(cmd.Cmd):
@@ -14,14 +15,8 @@ class CLI(cmd.Cmd):
         self.prompt = "> "  # define command prompt
 
     def do_build_game_data(self, arg):
-        path = os.path.dirname(os.path.abspath("__file__"))
-        h2g = HTML2Game('https://www.mightyape.co.nz')
-        target = 'https://www.mightyape.co.nz/games/ps4/adventure-rpg'
-        entire_url = target + '/all?page='
-        urls = h2g.get_urls(entire_url)
-        h2g.serializing_game(urls)
-        games = h2g.unserializing_game(path)
-        h2g.build_html(games)
+        URLTool().serializing_game()
+        DataTool().build_html()
         webbrowser.open('file://' + os.path.realpath('game_display.html'))
 
     def help_build_game_data(self):

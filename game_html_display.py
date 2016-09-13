@@ -17,7 +17,6 @@ class DataTool(object):
 
     def build_html(self):
         games = self.get_games('')
-        print(len(games))
         css_link = '<link rel="stylesheet" ' \
                    'type="text/css" href="stylesheet.css">'
         try:
@@ -67,7 +66,3 @@ class DataTool(object):
         except:
             print("Unexpected error:", sys.exc_info()[0])
             raise
-
-if __name__ == '__main__':
-    tool = DataTool()
-    tool.build_html()
