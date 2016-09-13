@@ -40,9 +40,3 @@ class PieTool(object):
 
         py.plot(fig)
 
-'''
-
-'''
-# if __name__ == '__main__':
-#     pt = PieTool()
-#     pt.show_pie()

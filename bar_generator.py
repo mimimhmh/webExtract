@@ -26,28 +26,28 @@ class BarTool(object):
             c[game.classification] = c[game.classification] + 1
             try:
                 if (game.classification == Classification.G.value) \
-                        and (game.inStock):
+                        and (game.in_stock):
                     g_in += 1
                 if (game.classification == Classification.PG.value) \
-                        and (game.inStock):
+                        and (game.in_stock):
                     pg_in += 1
                 if (game.classification == Classification.M.value) \
-                        and (game.inStock):
+                        and (game.in_stock):
                     m_in += 1
                 if (game.classification == Classification.R13.value) \
-                        and (game.inStock):
+                        and (game.in_stock):
                     r13_in += 1
                 if (game.classification == Classification.R16.value) \
-                        and (game.inStock):
+                        and (game.in_stock):
                     r16_in += 1
                 if (game.classification == Classification.R18.value) \
-                        and (game.inStock):
+                        and (game.in_stock):
                     r18_in += 1
                 if (game.classification == Classification.TBC.value) \
-                        and (game.inStock):
+                        and (game.in_stock):
                     tbc_in += 1
                 if (game.classification == Classification.UNDEFINED.value) \
-                        and (game.inStock):
+                        and (game.in_stock):
                     un_in += 1
             except TypeError:
                 print("Oops!  That was no valid type.  Try again...")

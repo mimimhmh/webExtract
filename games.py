@@ -10,7 +10,7 @@ class Classification(Enum):
     R16 = 'Restricted 16'
     R18 = 'Restricted 18'
     TBC = 'Pending Classification'
-    UNDEFINED = 'undefined'
+    UNDEFINED = 'Undefined'
 
 
 class Game(object):
