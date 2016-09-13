@@ -20,11 +20,11 @@ class PieTool(object):
                 price = float(game.price)
             if price < 40:
                 price_40_below += 1
-            elif price >= 40 and price < 70:
+            elif 40 <= price < 70:
                 price_40_70 += 1
-            elif price >= 70 and price < 100:
+            elif 70 <= price < 100:
                 price_70_100 += 1
-            elif price >= 100 and price < 170:
+            elif 100 <= price < 170:
                 price_100_170 += 1
             elif price >= 170:
                 price_170_plus += 1
