@@ -1,12 +1,12 @@
 import plotly.plotly as py
-from html_analyse_tool import MyTool
+from webExtract.game_html_display import DataTool
 
 
 class PieTool(object):
 
     def show_pie(self):
-        mt = MyTool()
-        games = mt.analyse()
+        mt = DataTool()
+        games = mt.get_games()
         price_40_below = 0
         price_40_70 = 0
         price_70_100 = 0

@@ -1,8 +1,8 @@
 import plotly.plotly as py
 import plotly.graph_objs as go
 from collections import Counter
-from games import Game, Classification
-from html_analyse_tool import MyTool
+from webExtract.games import Classification
+from webExtract.game_html_display import DataTool
 
 
 py.sign_in('mimimhmh@gmail.com', '8tapwyxkuv')
@@ -11,8 +11,8 @@ py.sign_in('mimimhmh@gmail.com', '8tapwyxkuv')
 class BarTool(object):
 
     def show_bar(self):
-        mt = MyTool()
-        games = mt.analyse()
+        mt = DataTool()
+        games = mt.get_games()
         c = Counter()
         g_in = 0
         pg_in = 0

@@ -3,7 +3,7 @@ import pickle
 
 class DataTool(object):
 
-    def get_games(self, path):
+    def get_games(self, path=''):
         games = []
         try:
             with open(path + 'games.dat', 'rb') as f:
@@ -16,7 +16,7 @@ class DataTool(object):
         return games
 
     def build_html(self):
-        games = self.get_games('')
+        games = self.get_games()
         css_link = '<link rel="stylesheet" ' \
                    'type="text/css" href="stylesheet.css">'
         try:
@@ -35,12 +35,12 @@ class DataTool(object):
                 f.write('<table id="table-1">\n')
                 f.write('<tr>\n')
                 f.write('<th>No.</th>\n')
-                f.write('<th>game_ID</th>\n')
-                f.write('<th>title</th>\n')
-                f.write('<th>price</th>\n')
+                f.write('<th>Game_ID</th>\n')
+                f.write('<th>Title</th>\n')
+                f.write('<th>Price</th>\n')
                 f.write('<th>CLS</th>\n')
-                f.write('<th>release_date</th>\n')
-                f.write('<th>in_Stock</th>\n')
+                f.write('<th>Release_Date</th>\n')
+                f.write('<th>In_Stock</th>\n')
                 f.write('</tr>\n')
                 for each in games:
                     f.write('<tr class="game">\n')
@@ -58,6 +58,7 @@ class DataTool(object):
                 f.write('</table>\n')
                 f.write('</div>\n')
                 f.write('</body>\n')
+                f.write('</html>\n')
         except OSError as err:
             print("OS error: {0}".format(err))
         except TypeError as err:
