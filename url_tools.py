@@ -69,10 +69,14 @@ class URLTool(object):
             game_id = self.get_data_attr(detail_selector, self.game_id_xpath)
 
             if self.get_len(detail_selector, self.subtitle_len) != 0 \
-                    and self.get_data_attr(detail_selector, self.subtitle_xpath)[0].isupper():
-                game_name = self.get_data_attr(detail_selector, self.subtitle_xpath)
+                    and \
+                    self.get_data_attr(detail_selector,
+                                       self.subtitle_xpath)[0].isupper():
+                game_name = self.get_data_attr(detail_selector,
+                                               self.subtitle_xpath)
             else:
-                game_name = self.get_data_attr(detail_selector, self.title_xpath)
+                game_name = self.get_data_attr(detail_selector,
+                                               self.title_xpath)
             print(game_name)
             print(game_id)
             print(url)
@@ -92,13 +96,20 @@ class URLTool(object):
             if self.get_len(detail_selector, self.clz_xpath) == 0:
                 game_classification = 'Undefined'
             else:
-                game_classification = self.get_data_attr(detail_selector, self.clz_xpath)
+                game_classification = self.get_data_attr(detail_selector,
+                                                         self.clz_xpath)
 
             status_str = self.get_data_attr(detail_selector, self.status)
             if status_str != 'In stock at':
                 in_stock = False
-            release_date = self.get_data_attr(detail_selector, self.release_data_xpath)
-            game = Game(game_id, game_name, game_price, game_classification, release_date, in_stock)
+            release_date = self.get_data_attr(detail_selector,
+                                              self.release_data_xpath)
+            game = Game(game_id,
+                        game_name,
+                        game_price,
+                        game_classification,
+                        release_date,
+                        in_stock)
             games.append(game)
         print(str(len(games)) + ' in total')
         return games
