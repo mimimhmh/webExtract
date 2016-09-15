@@ -11,7 +11,14 @@ class URLTool(object):
     target = ''
     game_id_xpath = ''
     subtitle_xpath = ''
+    subtitle_len = 0
     title_xpath = ''
+    price_unavailable = 0
+    dollars = ''
+    cents = ''
+    clz_xpath = ''
+    status = ''
+    release_data_xpath = ''
 
     def conf_reader(self, config_file_path='info.conf'):
         cf = configparser.ConfigParser()
@@ -20,7 +27,14 @@ class URLTool(object):
         self.target = cf.get("URL", "target")
         self.game_id_xpath = cf.get("URL", "game_id_xpath")
         self.subtitle_xpath = cf.get("URL", "subtitle_xpath")
+        self.subtitle_len = cf.get("URL", "subtitle_len")
         self.title_xpath = cf.get("URL", "title_xpath")
+        self.price_unavailable = cf.get("URL", "price_unavailable")
+        self.dollars = cf.get("URL", "dollars")
+        self.cents = cf.get("URL", "cents")
+        self.clz_xpath = cf.get("URL", "clz_xpath")
+        self.status = cf.get("URL", "status")
+        self.release_data_xpath = cf.get('URL', 'release_data_xpath')
 
     def get_urls(self):
         urls = []
@@ -41,6 +55,9 @@ class URLTool(object):
     def get_data_attr(self, selector, url):
         return selector.xpath(url)[0].strip()
 
+    def get_len(self, selector, url):
+        return len(selector.xpath(url))
+
     def analyse_url(self):
         games = []
         urls = self.get_urls()
@@ -51,7 +68,7 @@ class URLTool(object):
 
             game_id = self.get_data_attr(detail_selector, self.game_id_xpath)
 
-            if len(detail_selector.xpath('//span[@class="nameSubtitle"]')) != 0 \
+            if self.get_len(detail_selector, self.subtitle_len) != 0 \
                     and self.get_data_attr(detail_selector, self.subtitle_xpath)[0].isupper():
                 game_name = self.get_data_attr(detail_selector, self.subtitle_xpath)
             else:
@@ -60,27 +77,27 @@ class URLTool(object):
             print(game_id)
             print(url)
 
-            if len(detail_selector.xpath('//div[@class="stock-status unavailable"]')) == 1:
+            if self.get_len(detail_selector, self.price_unavailable) == 1:
                 game_price = 'TBC'
             else:
-                dollars = detail_selector.xpath('//span[@class="dollar"]/text()')[0]
+                dollars = self.get_data_attr(detail_selector, self.dollars)
                 if dollars == 'TBC':
                     game_price = dollars
                 else:
-                    cents = detail_selector.xpath('//span[@class="cents"]/text()')[0]
+                    cents = self.get_data_attr(detail_selector, self.cents)
                     game_price = dollars + '.' + cents
             print(game_price)
             print("------------------")
 
-            if len(detail_selector.xpath('//div[@class="classification"]/img/@alt')) == 0:
+            if self.get_len(detail_selector, self.clz_xpath) == 0:
                 game_classification = 'Undefined'
             else:
-                game_classification = detail_selector.xpath('//div[@class="classification"]/img/@alt')[0]
+                game_classification = self.get_data_attr(detail_selector, self.clz_xpath)
 
-            status_str = detail_selector.xpath('//div[@class="status"]/text()')[0].strip()
+            status_str = self.get_data_attr(detail_selector, self.status)
             if status_str != 'In stock at':
                 in_stock = False
-            release_date = detail_selector.xpath('//div[@class="productDetails"]/div/div/div/text()')[0].strip()
+            release_date = self.get_data_attr(detail_selector, self.release_data_xpath)
             game = Game(game_id, game_name, game_price, game_classification, release_date, in_stock)
             games.append(game)
         print(str(len(games)) + ' in total')
