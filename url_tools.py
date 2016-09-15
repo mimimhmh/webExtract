@@ -9,12 +9,14 @@ class URLTool(object):
 
     entire_url = ''
     target = ''
+    game_id_xpath = ''
 
     def conf_reader(self, config_file_path='info.conf'):
         cf = configparser.ConfigParser()
         cf.read(config_file_path)
         self.entire_url = cf.get("URL", "entire_url")
         self.target = cf.get("URL", "target")
+        self.game_id_xpath = cf.get("URL", "game_id_xpath")
 
     def get_urls(self):
         urls = []
@@ -40,7 +42,7 @@ class URLTool(object):
             detail_selector = etree.HTML(result.text)
             in_stock = True
 
-            game_id = detail_selector.xpath('//div[@class="productDetails"]/div/div[last()]/div/text()')[0]
+            game_id = detail_selector.xpath(self.game_id_xpath)[0]
 
             if len(detail_selector.xpath('//span[@class="nameSubtitle"]')) != 0 \
                     and detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0][0].isupper():
