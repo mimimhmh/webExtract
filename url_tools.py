@@ -39,7 +39,7 @@ class URLTool(object):
         return urls
 
     def get_data_attr(self, selector, url):
-        return selector.xpath(url)[0]
+        return selector.xpath(url)[0].strip()
 
     def analyse_url(self):
         games = []
