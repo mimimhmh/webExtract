@@ -10,6 +10,8 @@ class URLTool(object):
     entire_url = ''
     target = ''
     game_id_xpath = ''
+    subtitle_xpath = ''
+    title_xpath = ''
 
     def conf_reader(self, config_file_path='info.conf'):
         cf = configparser.ConfigParser()
@@ -17,6 +19,8 @@ class URLTool(object):
         self.entire_url = cf.get("URL", "entire_url")
         self.target = cf.get("URL", "target")
         self.game_id_xpath = cf.get("URL", "game_id_xpath")
+        self.subtitle_xpath = cf.get("URL", "subtitle_xpath")
+        self.title_xpath = cf.get("URL", "title_xpath")
 
     def get_urls(self):
         urls = []
@@ -34,6 +38,9 @@ class URLTool(object):
                 urls.append(real_path)
         return urls
 
+    def get_data_attr(self, selector, url):
+        return selector.xpath(url)[0]
+
     def analyse_url(self):
         games = []
         urls = self.get_urls()
@@ -42,13 +49,13 @@ class URLTool(object):
             detail_selector = etree.HTML(result.text)
             in_stock = True
 
-            game_id = detail_selector.xpath(self.game_id_xpath)[0]
+            game_id = self.get_data_attr(detail_selector, self.game_id_xpath)
 
             if len(detail_selector.xpath('//span[@class="nameSubtitle"]')) != 0 \
-                    and detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0][0].isupper():
-                game_name = detail_selector.xpath('//span[@class="nameSubtitle"]/text()')[0]
+                    and self.get_data_attr(detail_selector, self.subtitle_xpath)[0].isupper():
+                game_name = self.get_data_attr(detail_selector, self.subtitle_xpath)
             else:
-                game_name = detail_selector.xpath('//header/h1/text()')[0]
+                game_name = self.get_data_attr(detail_selector, self.title_xpath)
             print(game_name)
             print(game_id)
             print(url)
