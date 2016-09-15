@@ -75,6 +75,10 @@ class URLTool(object):
             game = Game(game_id, game_name, game_price, game_classification, release_date, in_stock)
             games.append(game)
         print(str(len(games)) + ' in total')
+        return games
+
+    def serialize_data(self):
+        games = self.serializing_game()
         try:
             with open('games.dat', 'wb') as f:
                 f.write(pickle.dumps(games))
