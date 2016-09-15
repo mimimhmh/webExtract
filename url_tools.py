@@ -32,7 +32,7 @@ class URLTool(object):
                 urls.append(real_path)
         return urls
 
-    def serializing_game(self):
+    def analyse_url(self):
         games = []
         urls = self.get_urls()
         for url in urls:
@@ -78,7 +78,7 @@ class URLTool(object):
         return games
 
     def serialize_data(self):
-        games = self.serializing_game()
+        games = self.analyse_url()
         try:
             with open('games.dat', 'wb') as f:
                 f.write(pickle.dumps(games))
