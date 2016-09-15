@@ -15,7 +15,7 @@ class CLI(cmd.Cmd):
         self.prompt = "> "  # define command prompt
 
     def do_build_game_data(self, arg):
-        URLTool().serializing_game()
+        URLTool().serialize_data()
         DataTool().build_html()
         webbrowser.open('file://' + os.path.realpath('game_display.html'))
 
