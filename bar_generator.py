@@ -10,7 +10,7 @@ py.sign_in('mimimhmh@gmail.com', '8tapwyxkuv')
 
 class BarTool(object):
 
-    def show_bar(self):
+    def data_collector(self):
         mt = DataTool()
         games = mt.get_games()
         c = Counter()
@@ -60,17 +60,25 @@ class BarTool(object):
         count_R18 = c[Classification.R18.value]
         count_TBC = c[Classification.TBC.value]
         count_UNDEFINED = c[Classification.UNDEFINED.value]
+        total_list = [count_G, count_PG, count_M, count_R13, count_R16,
+               count_R18, count_TBC, count_UNDEFINED]
+        stock_list = [g_in, pg_in, m_in, r13_in, r16_in, r18_in, tbc_in, un_in]
 
+        return total_list, stock_list
+
+    def show_bar(self):
+        t_list = self.data_collector()
+        total_list = t_list[0]
+        stock_list = t_list[1]
         trace1 = go.Bar(
             x=['G', 'PG', 'M', 'R13', 'R16', 'R18', 'TBC', 'UNDEFINED'],
-            y=[count_G, count_PG, count_M, count_R13, count_R16,
-               count_R18, count_TBC, count_UNDEFINED],
+            y=total_list,
             name='Total'
         )
 
         trace2 = go.Bar(
             x=['G', 'PG', 'M', 'R13', 'R16', 'R18', 'TBC', 'UNDEFINED'],
-            y=[g_in, pg_in, m_in, r13_in, r16_in, r18_in, tbc_in, un_in],
+            y=stock_list,
             name='In Stock'
         )
 
@@ -83,6 +91,6 @@ class BarTool(object):
         py.plot(fig, filename='grouped-bar')
 
 
-# if __name__ == '__main__':
-#     bt = BarTool()
-#     bt.show_bar()
+if __name__ == '__main__':
+    bt = BarTool()
+    bt.show_bar()
