@@ -1,9 +1,10 @@
 import pickle
 import os
 
+
 class DataTool(object):
 
-    location = os.path.dirname(os.path.abspath(''))
+    location = os.path.dirname(os.path.abspath('games.dat'))
 
     def get_games(self, path=location):
         games = []
@@ -69,3 +70,8 @@ class DataTool(object):
         except:
             print("Unexpected error:", sys.exc_info()[0])
             raise
+
+if __name__ == '__main__':
+    dt = DataTool()
+    print(dt.location)
+    dt.build_html()
