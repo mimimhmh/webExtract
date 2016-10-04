@@ -1,21 +1,24 @@
 import unittest
+import os
+from webExtract.bar_generator import BarTool
+
+bt = BarTool()
+t_list = bt.data_collector(location=os.path.pardir)
 
 
-class TestStringMethods(unittest.TestCase):
+class TestBarMethods(unittest.TestCase):
 
-    def test_upper(self):
-        self.assertEqual('foo'.upper(), 'FOO')
+    def test_data_collector(self):
+        t = ([5, 22, 19, 8, 6, 1, 25, 20], [2, 10, 8, 3, 5, 1, 0, 8])
+        self.assertEqual(t_list, t)
 
-    def test_isupper(self):
-        self.assertTrue('FOO'.isupper())
-        self.assertFalse('Foo'.isupper())
+    def test_data_1(self):
+        ls_1 = [5, 22, 19, 8, 6, 1, 25, 20]
+        self.assertEqual(t_list[0], ls_1)
 
-    def test_split(self):
-        s = 'hello world'
-        self.assertEqual(s.split(), ['hello', 'world'])
-        # check that s.split fails when the separator is not a string
-        with self.assertRaises(TypeError):
-            s.split(2)
+    def test_data_2(self):
+        ls_2 = [2, 10, 8, 3, 5, 1, 0, 8]
+        self.assertEqual(t_list[1], ls_2)
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=2)

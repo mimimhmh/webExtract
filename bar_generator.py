@@ -1,5 +1,6 @@
 import plotly.plotly as py
 import plotly.graph_objs as go
+import os
 from collections import Counter
 from webExtract.games import Classification
 from webExtract.game_html_display import DataTool
@@ -10,9 +11,9 @@ py.sign_in('mimimhmh@gmail.com', '8tapwyxkuv')
 
 class BarTool(object):
 
-    def data_collector(self):
+    def data_collector(self, location=os.path.abspath("")):
         mt = DataTool()
-        games = mt.get_games()
+        games = mt.get_games(path=location)
         c = Counter()
         g_in = 0
         pg_in = 0

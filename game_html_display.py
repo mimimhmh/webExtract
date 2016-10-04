@@ -1,17 +1,19 @@
 import pickle
-
+import os
 
 class DataTool(object):
 
-    def get_games(self, path=''):
+    location = os.path.dirname(os.path.abspath(''))
+
+    def get_games(self, path=location):
         games = []
         try:
-            with open(path + 'games.dat', 'rb') as f:
+            with open(path + '/games.dat', 'rb') as f:
                 games = pickle.load(f)
         except OSError as err:
             print("OS error: {0}".format(err))
         except:
-            print("Unexpected error:", sys.exc_info()[0])
+            print("Unexpected error: ")
             raise
         return games
 
